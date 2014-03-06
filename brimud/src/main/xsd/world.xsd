@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://brimud.com/world"
+	xmlns:tns="http://brimud.com/world" elementFormDefault="qualified"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:zone="http://brimud.com/zone">
+	<import namespace="http://brimud.com/zone" schemaLocation="zone.xsd" />
+	<import namespace="http://www.w3.org/2001/XInclude"
+		schemaLocation="http://www.w3.org/2001/XInclude.xsd" />
+	<element name="world" type="tns:worldType">
+		<key name="zoneKey">
+			<selector xpath="zone:zone" />
+			<field xpath="@id" />
+		</key>
+	</element>
+
+	<complexType name="worldType">
+		<sequence>
+			<element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+			<element ref="zone:zone" minOccurs="0" maxOccurs="unbounded" />
+			<element name="zonelinks" type="tns:zoneLinksType" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="zoneLinksType">
+		<sequence>
+			<element name="link" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="string">
+							<attribute name="fromZone" type="string" />
+							<attribute name="fromRoom" type="string" />
+							<attribute name="toZone" type="string" />
+							<attribute name="toRoom" type="string" />
+							<attribute name="direction" type="string"/>
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+
+</schema>

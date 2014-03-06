@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.brimud.model">
+	<class name="Room" table="room">
+		<composite-id name="id" class="RoomId">
+			<key-property name="roomId" column="id" type="string" length="30"/>
+			<key-many-to-one name="zone" class="Zone" column="zone_id"/>
+		</composite-id>
+		<property name="name" column="name" type="string" length="256"/>
+		<property name="shortDescription" column="short" type="string" length="256"/>
+		<property name="description" column="description" type="text"/>
+		
+		<map name="exits" table="exits" lazy="true" cascade="all" >
+			<key>
+				<column name="owning_room_id"/>
+				<column name="owning_zone_id"/>
+			</key>
+			<map-key column="direction" type="com.brimud.db.DirectionUserType"/>
+			<many-to-many class="Room">
+				<column name="room_id"/>
+				<column name="zone_id"/>
+			</many-to-many>
+		</map>
+		
+		<map name="scanDescriptions" table="scans" lazy="true" cascade="all">
+			<key>
+				<column name="owning_room_id"/>
+				<column name="owning_zone_id"/>
+			</key>
+			<map-key column="direction" type="com.brimud.db.DirectionUserType"/>
+			<element column="description" type="string" length="256"/>
+		</map>
+		
+		<map name="extraDescriptions" table="extras" lazy="true" cascade="all">
+			<key>
+				<column name="owning_room_id"/>
+				<column name="owning_zone_id"/>
+			</key>
+			<map-key column="keyword" type="string" length="30"/>
+			<element column="description" type="string" length="256"/>
+		</map>
+		
+		<set name="players">
+      <key>
+      	<column name="room_id"/>
+      	<column name="zone_id"/>
+      </key>
+      <one-to-many class="com.brimud.model.Player"/>
+		</set>
+		
+	</class>
+</hibernate-mapping>

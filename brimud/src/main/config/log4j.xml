@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] [%t] %C#%M:%L %d%n%m%n%n"/>
+		</layout>
+	</appender>
+
+	<appender name="application" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="logs/application.log"/>
+		<param name="Threshold" value="DEBUG"/>
+		<param name="MaxFileSize" value="10MB"/>
+		<param name="MaxBackupIndex" value="3"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] [%t] %C#%M:%L %d%n%m%n%n"/>
+		</layout>
+	</appender>
+
+	<appender name="telnet" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="logs/telnet.log"/>
+		<param name="Threshold" value="INFO"/>
+		<param name="MaxFileSize" value="10MB"/>
+		<param name="MaxBackupIndex" value="3"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] [%t] %C#%M:%L %d%n%m%n%n"/>
+		</layout>
+	</appender>
+	
+	<appender name="hibernate" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="logs/hibernate.log"/>
+		<param name="Threshold" value="INFO"/>
+		<param name="MaxFileSize" value="10MB"/>
+		<param name="MaxBackupIndex" value="3"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] [%t] %C#%M:%L %d%n%m%n%n"/>
+		</layout>
+	</appender>
+	
+	<logger name="net.wimpi.telnetd" additivity="false">
+		<appender-ref ref="telnet"/>
+	</logger>
+	
+	<logger name="org.hibernate" additivity="false">
+		<appender-ref ref="hibernate"/>
+	</logger>
+	
+	<logger name="com.brimud" additivity="true">
+		<appender-ref ref="application"/>
+	</logger>
+	
+	<root>
+		<priority value="debug"></priority>
+		<appender-ref ref="stdout"/>
+	</root>
+	
+</log4j:configuration>
