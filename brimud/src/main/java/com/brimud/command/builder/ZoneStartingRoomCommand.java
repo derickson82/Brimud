@@ -9,6 +9,7 @@ import com.brimud.db.ZoneDao;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
+import com.brimud.model.World;
 import com.brimud.model.Zone;
 import com.brimud.service.MessageService;
 import com.google.inject.Inject;
@@ -23,15 +24,12 @@ class ZoneStartingRoomCommand implements Command {
   
   private final MessageService messageService;
   
-  private final RoomDao roomDao;
-  
-  private final ZoneDao zoneDao;
+  private final World world;
   
   @Inject
-  ZoneStartingRoomCommand(MessageService messageService, RoomDao roomDao, ZoneDao zoneDao) {
+  ZoneStartingRoomCommand(MessageService messageService, World world) {
     this.messageService = messageService;
-    this.roomDao = roomDao;
-    this.zoneDao = zoneDao;
+    this.world = world;
   }
   
   /* (non-Javadoc)
@@ -50,16 +48,15 @@ class ZoneStartingRoomCommand implements Command {
       return;
     }
     
-    Room startingRoom = roomDao.getById(startingRoomId);
+    Room startingRoom = world.getRoomById(startingRoomId);
     if (startingRoom == null) {
       messageService.sendMessage(player, "Room " + startingRoomId + " doesn't exist!");
       return;
     }
     
-    Zone zoneToUpdate = zoneDao.getById(startingRoom.getId().getZone().getId());
+    Zone zoneToUpdate = world.getZoneById(startingRoom.getId().getZone().getId());
     zoneToUpdate.setStartingRoom(startingRoom.getId().getRoomId());
-    zoneDao.saveOrUpdate(zoneToUpdate);
-    
+   
     messageService.sendMessage(player, "Starting room set to " + startingRoomId);
   }
 

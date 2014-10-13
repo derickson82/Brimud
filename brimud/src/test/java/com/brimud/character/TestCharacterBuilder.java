@@ -6,12 +6,10 @@ package com.brimud.character;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import com.brimud.character.CharacterBuilder.CharacterBuilderException;
-import com.brimud.character.race.Dwarf;
-import com.brimud.character.race.Race;
 
 /**
  * @author dan
@@ -38,7 +36,7 @@ public class TestCharacterBuilder {
     Assert.assertEquals(builder.getName(), "Bob");
 
     builder.dwarf();
-    Assert.assertEquals(builder.getRace().getClass(), Dwarf.class);
+    Assert.assertEquals(builder.getRace(), "Dwarf");
 
     // put more points in the pool by lowering ability score
     builder = builder.strength(7);
@@ -223,9 +221,9 @@ public class TestCharacterBuilder {
     }
 
     Character character = builder.build();
-    Race race = character.getRace();
+    String race = character.getRace();
     Assert.assertNotNull(race);
-    Assert.assertEquals(race.getClass(), builder.getRace().getClass());
+    Assert.assertEquals(race, builder.getRace());
 
     // see that the racial ability bonuses are applied to the base scores when
     // creating the character

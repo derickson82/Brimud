@@ -3,19 +3,12 @@
  */
 package com.brimud.command.builder;
 
-import java.util.List;
-import java.util.Map.Entry;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
-
 import com.brimud.command.Command;
-import com.brimud.command.Direction;
 import com.brimud.db.PlayerDao;
-import com.brimud.db.RoomDao;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
+import com.brimud.model.World;
 import com.brimud.service.MessageService;
 import com.google.inject.Inject;
 
@@ -29,13 +22,13 @@ class RoomIdCommand implements Command {
   
   private final int ID_MAX_LENGTH = Integer.MAX_VALUE;
   private final MessageService messageService;
-  private final RoomDao roomDao;
+  private final World world;
   private final PlayerDao playerDao;
 
   @Inject
-  RoomIdCommand(MessageService messageService, RoomDao roomDao, PlayerDao playerDao) {
+  RoomIdCommand(MessageService messageService, World world, PlayerDao playerDao) {
     this.messageService = messageService;
-    this.roomDao = roomDao;
+    this.world = world;
     this.playerDao = playerDao;
   }
   
@@ -50,7 +43,7 @@ class RoomIdCommand implements Command {
       Room currentRoom = player.getRoom();
       RoomId roomId = new RoomId(currentRoom.getId().getZone(), newRoomId);
       
-      Room newRoom = roomDao.getById(roomId);
+      Room newRoom = world.getRoomById(roomId);
       if (newRoom != null) {
         messageService.sendMessage(player, "A room with the id: " + newRoomId + " already exists!");
         return;
@@ -63,28 +56,30 @@ class RoomIdCommand implements Command {
       newRoom.setPlayers(currentRoom.getPlayers());
       newRoom.setExits(currentRoom.getExits());
       
-      Criteria criteria = roomDao.createCriteria();
-
-      @SuppressWarnings("unchecked")
-      List<Room> rooms = criteria.createCriteria("exits").add(Restrictions.idEq(currentRoom.getId())).list();
       
-      for (Room r : rooms) {
-        for (Entry<Direction, Room> entry : r.getExits().entrySet()) {
-          if (entry.getValue().getId().equals(currentRoom.getId())) {
-            r.addExit(entry.getKey(), newRoom);
-            break;
-          }
-        }
-      }
-      
-      @SuppressWarnings("unchecked")
-      List<Player> playersInRoom = playerDao.createCriteria().add(Restrictions.eq("room", currentRoom)).list();
-      for (Player p : playersInRoom) {
-        p.setRoom(newRoom);
-      }
-      
-      roomDao.saveOrUpdate(newRoom);
-      roomDao.delete(currentRoom);
+      // TODO this seems to be the logic for changing a rooms ID. Needs some cleaning up, I think
+//      Criteria criteria = roomDao.createCriteria();
+//
+//      @SuppressWarnings("unchecked")
+//      List<Room> rooms = criteria.createCriteria("exits").add(Restrictions.idEq(currentRoom.getId())).list();
+//      
+//      for (Room r : rooms) {
+//        for (Entry<Direction, Room> entry : r.getExits().entrySet()) {
+//          if (entry.getValue().getId().equals(currentRoom.getId())) {
+//            r.addExit(entry.getKey(), newRoom);
+//            break;
+//          }
+//        }
+//      }
+//      
+//      @SuppressWarnings("unchecked")
+//      List<Player> playersInRoom = playerDao.createCriteria().add(Restrictions.eq("room", currentRoom)).list();
+//      for (Player p : playersInRoom) {
+//        p.setRoom(newRoom);
+//      }
+//      
+//      roomDao.saveOrUpdate(newRoom);
+//      roomDao.delete(currentRoom);
       messageService.sendMessage(player, newRoom.look(player));
     }
   }

@@ -3,20 +3,17 @@
  */
 package com.brimud.db;
 
-import org.hibernate.SessionFactory;
-
 import com.brimud.model.Player;
-import com.google.inject.Inject;
+
 
 /**
  * @author dan
  *
  */
-public class PlayerDao extends HibernateDao<Player, String> {
+public class PlayerDao {
 
-  @Inject
-  PlayerDao(SessionFactory sessionFactory) {
-    super(Player.class, String.class, sessionFactory);
-  }
-  
+	public Player getById(String name) {
+		throw new RuntimeException("Haven't implemented the player dao yet");
+	}
+
 }

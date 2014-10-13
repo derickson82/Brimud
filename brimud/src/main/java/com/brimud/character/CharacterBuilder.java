@@ -10,14 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.brimud.character.race.Dwarf;
-import com.brimud.character.race.Elf;
-import com.brimud.character.race.Gnome;
-import com.brimud.character.race.Halfelf;
-import com.brimud.character.race.Halfling;
-import com.brimud.character.race.Halforc;
-import com.brimud.character.race.Human;
-import com.brimud.character.race.Race;
 import com.brimud.util.Preconditions;
 import com.brimud.util.StringUtil;
 
@@ -28,7 +20,7 @@ import com.brimud.util.StringUtil;
 public class CharacterBuilder {
 
   private String name;
-  private Race race;
+  private String race;
   private String characterClass;
   private final Map<Ability, Integer> abilityMap = new EnumMap<Ability, Integer>(Ability.class);
   private final Map<Ability, Integer> racialAbilityBonuses = new EnumMap<Ability, Integer>(Ability.class);
@@ -75,7 +67,7 @@ public class CharacterBuilder {
     return name;
   }
   
-  public Race getRace() {
+  public String getRace() {
     return race;
   }
   
@@ -89,7 +81,7 @@ public class CharacterBuilder {
   }
   
   public CharacterBuilder dwarf() {
-    race = new Dwarf();
+    race = "Dwarf";
     
     racialAbilityBonuses.clear();
     racialAbilityBonuses.put(Ability.CON, 2);
@@ -100,7 +92,7 @@ public class CharacterBuilder {
   }
   
   public CharacterBuilder elf() {
-    race = new Elf();
+    race = "Elf";
     
     racialAbilityBonuses.clear();
     racialAbilityBonuses.put(Ability.DEX, 2);
@@ -111,7 +103,7 @@ public class CharacterBuilder {
   }
   
   public CharacterBuilder gnome() {
-    race = new Gnome();
+    race = "Gnome";
     
     racialAbilityBonuses.clear();
     racialAbilityBonuses.put(Ability.CON, 2);
@@ -128,7 +120,7 @@ public class CharacterBuilder {
    */
   public CharacterBuilder halfelf(Ability ability) {
     Preconditions.checkNotNull(ability, "ability");
-    race = new Halfelf();
+    race = "Halfelf";
     
     racialAbilityBonuses.clear();
     racialAbilityBonuses.put(ability, 2);
@@ -138,7 +130,7 @@ public class CharacterBuilder {
   
   public CharacterBuilder halforc(Ability ability) {
     Preconditions.checkNotNull(ability, "ability");
-    race = new Halforc();
+    race = "Halforc";
     
     racialAbilityBonuses.clear();
     racialAbilityBonuses.put(ability, 2);
@@ -147,7 +139,7 @@ public class CharacterBuilder {
   }
   
   public CharacterBuilder halfling() {
-    race = new Halfling();
+    race = "Halfling";
     
     racialAbilityBonuses.clear();
     racialAbilityBonuses.put(Ability.DEX, 2);
@@ -158,7 +150,7 @@ public class CharacterBuilder {
   }
   
   public CharacterBuilder human(Ability ability) {
-    race = new Human();
+    race = "Human";
     
     racialAbilityBonuses.clear();
     racialAbilityBonuses.put(ability, 2);

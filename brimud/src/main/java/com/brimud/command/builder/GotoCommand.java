@@ -5,10 +5,10 @@ package com.brimud.command.builder;
 
 import com.brimud.command.Command;
 import com.brimud.db.PlayerDao;
-import com.brimud.db.RoomDao;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
+import com.brimud.model.World;
 import com.brimud.service.MessageService;
 import com.brimud.util.Preconditions;
 import com.brimud.util.StringUtil;
@@ -24,14 +24,14 @@ class GotoCommand implements Command {
 	
   private final MessageService messageService;
 
-  private final RoomDao roomDao;
-
+  private final World world;
+  
   private final PlayerDao playerDao;
 
   @Inject
-  GotoCommand(MessageService messageService, RoomDao roomDao, PlayerDao playerDao) {
+  GotoCommand(MessageService messageService, World world, PlayerDao playerDao) {
     this.messageService = messageService;
-    this.roomDao = roomDao;
+    this.world = world;
     this.playerDao = playerDao;
   }
 
@@ -57,7 +57,7 @@ class GotoCommand implements Command {
     if (roomId == null) {
       roomId = new RoomId(currentRoom.getId().getZone(), arguments);
     }
-    Room gotoRoom = roomDao.getById(roomId);
+    Room gotoRoom = world.getRoomById(roomId);
     if (gotoRoom == null) {
       Player gotoPlayer = playerDao.getById(arguments);
       if (gotoPlayer != null) {

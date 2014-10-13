@@ -1,7 +1,12 @@
+buildscript {
+	repositories { 
+		mavenCentral() 
+	}
+}
 
 apply plugin: 'java'
-apply plugin: 'jaxb'
 apply plugin: 'distribution'
+apply plugin: 'eclipse'
 
 defaultTasks 'build'
 version = 1.0
@@ -13,27 +18,12 @@ repositories {
 
 dependencies {
 
-	jaxb "com.sun.xml.bind:jaxb-xjc:2.2.4-1"
 	compile group: "com.google.inject", name: "guice", version: "2.0"
-	compile group: "org.hibernate", name: "hibernate-core", version: "3.5.4-Final"
-	compile group: "net.wimpi", name: "telnetd-x", version: "2.1.1"
 	compile group: "org.slf4j", name: "slf4j-api", version: "1.7.5"
 	compile group: "io.netty", name: "netty-all", version: "4.0.0.CR7"
 	
-	runtime group: "mysql", name: "mysql-connector-java", version: "5.1.25"
-	runtime group: "javassist", name: "javassist", version: "3.9.0.GA"
-	
-	testCompile group: "org.testng", name: "testng", version: "6.8.5"
+	testCompile group: "junit", name: "junit", version: "4.11"
 	testCompile group: "org.easymock", name: "easymock", version: "3.1"
-}
-
-buildscript {
-	repositories { 
-		mavenCentral() 
-	}
-	dependencies { 
-		classpath 'no.entitas.gradle.jaxb:gradle-jaxb-plugin:2.0' 
-	}
 }
 
 jar {
@@ -68,10 +58,4 @@ distributions {
 			}
 		}
 	}
-}
-
-test { 
-	useTestNG { 
-	
-	} 
 }

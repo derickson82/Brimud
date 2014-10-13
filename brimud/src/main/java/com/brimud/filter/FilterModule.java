@@ -4,7 +4,6 @@
 package com.brimud.filter;
 
 import com.brimud.command.CommandInterpretter;
-import com.brimud.db.HibernateFilter;
 import com.brimud.statemachine.StateMachine;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -25,9 +24,8 @@ public class FilterModule extends AbstractModule {
 
   @Provides
   @CommandFilterChain
-  public FilterChain commandFilterChain(HibernateFilter hibFilter,
-      CommandAliasFilter commandAliasFilter, PromptFilter promptFilter, StateMachineFilter stateMachineFilter, CommandInterpretter commandInterpretter) {
-    FilterChain filterChain = new FilterChain(commandInterpretter, hibFilter, promptFilter, stateMachineFilter, commandAliasFilter);
+  public FilterChain commandFilterChain(CommandAliasFilter commandAliasFilter, PromptFilter promptFilter, StateMachineFilter stateMachineFilter, CommandInterpretter commandInterpretter) {
+    FilterChain filterChain = new FilterChain(commandInterpretter, promptFilter, stateMachineFilter, commandAliasFilter);
     return filterChain;
   }
 

@@ -11,6 +11,7 @@ import com.brimud.db.ZoneDao;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
+import com.brimud.model.World;
 import com.brimud.model.Zone;
 import com.brimud.service.MessageService;
 import com.google.inject.Inject;
@@ -24,15 +25,13 @@ class DigCommand implements Command {
   static final String DIG = "dig";
 
   private final MessageService messageService;
-  private final ZoneDao zoneDao;
-  private final RoomDao roomDao;
+  private final World world;
   private final MoveCommand moveCommand;
 
   @Inject
-  DigCommand(MessageService messageService, ZoneDao zoneDao, RoomDao roomDao, MoveCommand moveCommand) {
+  DigCommand(MessageService messageService, World world, MoveCommand moveCommand) {
     this.messageService = messageService;
-    this.zoneDao = zoneDao;
-    this.roomDao = roomDao;
+    this.world = world;
     this.moveCommand = moveCommand;
   }
 
@@ -75,18 +74,17 @@ class DigCommand implements Command {
       roomId = new RoomId(currentRoom.getId().getZone(), splitArgs[1]);
     } else {
       // TODO might need to lock down digging to other zones by role
-      Zone zone = zoneDao.getById(roomId.getZoneId());
+      Zone zone = world.getZoneById(roomId.getZoneId());
       if (zone == null) {
         messageService.sendMessage(player, "Zone " + roomId.getZoneId() + " must be created first.");
         return;
       }
     }
     
-    Room room = roomDao.getById(roomId);
+    Room room = world.getRoomById(roomId);
     if (room == null) {
       room = new Room();
       room.setId(roomId);
-      roomDao.saveOrUpdate(room);
     }
     currentRoom.addExit(d, room);
     room.addExit(d.opposite(), currentRoom);

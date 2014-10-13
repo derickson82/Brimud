@@ -7,7 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.brimud.model.Player;
 import com.google.inject.Singleton;
@@ -19,7 +20,7 @@ import com.google.inject.Singleton;
 @Singleton
 public class SessionManager {
 
-  private static final Logger logger = Logger.getLogger(SessionManager.class);
+  private static final Logger logger = LoggerFactory.getLogger(SessionManager.class);
 
   private final Map<String, Session> sessions = Collections.synchronizedMap(new HashMap<String, Session>());
 

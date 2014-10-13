@@ -78,7 +78,7 @@ public class LoginAndRegistration {
     
     // TODO confirm the new password before continuing
     session.setPassword(password);
-    accountDao.saveOrUpdate(session.getAccount());
+//    accountDao.saveOrUpdate(session.getAccount());
     
     session.authenticate(password);
     

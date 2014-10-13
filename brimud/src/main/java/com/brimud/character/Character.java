@@ -6,7 +6,6 @@ package com.brimud.character;
 import java.util.EnumMap;
 import java.util.Map;
 
-import com.brimud.character.race.Race;
 import com.brimud.util.Preconditions;
 
 /**
@@ -15,15 +14,14 @@ import com.brimud.util.Preconditions;
  */
 public class Character {
   private String name;
-  private Race race;
+  private String race;
   private String characterClass;
   private Map<Ability, Score> abilityScores = new EnumMap<Ability, Score>(Ability.class);
 
   public Character() {
-    // for hibernate?
   }
   
-  Character(String name, Race race, String characterClass, Map<Ability, Integer> abilityScores) {
+  Character(String name, String race, String characterClass, Map<Ability, Integer> abilityScores) {
     Preconditions.checkNotNull(name, "name");
     Preconditions.checkNotNull(race, "race");
     Preconditions.checkNotNull(characterClass, "characterClass");
@@ -45,13 +43,11 @@ public class Character {
     return name;
   }
 
-  // for hibernate
-  @SuppressWarnings("unused")
   public void setName(String name) {
     this.name = name;
   }
   
-  public Race getRace() {
+  public String getRace() {
     return race;
   }
   

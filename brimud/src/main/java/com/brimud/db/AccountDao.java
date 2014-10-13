@@ -3,19 +3,17 @@
  */
 package com.brimud.db;
 
-import org.hibernate.SessionFactory;
-
 import com.brimud.account.Account;
-import com.google.inject.Inject;
+
 
 /**
  * @author dan
  *
  */
-public class AccountDao extends HibernateDao<Account, String> {
+public class AccountDao {
 
-  @Inject
-  AccountDao(SessionFactory sessionFactory) {
-    super(Account.class, String.class, sessionFactory);
-  }
+	public Account getById(String accountName) {
+		throw new RuntimeException("Haven't implemented the account dao yet");
+	}
+	
 }

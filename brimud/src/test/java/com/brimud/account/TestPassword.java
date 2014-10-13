@@ -1,9 +1,8 @@
 package com.brimud.account;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
-import com.brimud.account.Password;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class TestPassword {
 

@@ -6,7 +6,6 @@ package com.brimud.command;
 import java.util.Map;
 
 import com.brimud.command.builder.BuilderCommands;
-import com.brimud.db.PlayerDao;
 import com.brimud.filter.ChainTarget;
 import com.brimud.model.Player;
 import com.brimud.service.MessageService;
@@ -20,8 +19,6 @@ import com.google.inject.Inject;
  */
 public class CommandInterpretter implements ChainTarget {
 
-  private final PlayerDao playerDao;
-
   private final MessageService messageService;
 
   private final Map<String, Command> commands;
@@ -29,9 +26,8 @@ public class CommandInterpretter implements ChainTarget {
   private final Map<String, Command> builderCommands;
 
   @Inject
-  CommandInterpretter(PlayerDao playerDao, MessageService messageService,
+  CommandInterpretter(MessageService messageService,
       @GeneralCommands Map<String, Command> commands, @BuilderCommands Map<String, Command> builderCommands) {
-    this.playerDao = playerDao;
     this.messageService = messageService;
     this.commands = commands;
     this.builderCommands = builderCommands;
@@ -66,8 +62,7 @@ public class CommandInterpretter implements ChainTarget {
 
   @Override
   public void execute(Session session, String command) {
-    Player player = playerDao.getById(session.getAccount().getPlayer().getName());
-    interpret(player, command);
+	  throw new RuntimeException("The command interpretter has been disabled. Figure out how to put it back");
   }
 
 }

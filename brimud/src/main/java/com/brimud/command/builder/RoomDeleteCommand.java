@@ -4,12 +4,11 @@
 package com.brimud.command.builder;
 
 import com.brimud.command.Command;
-import com.brimud.db.RoomDao;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
+import com.brimud.model.World;
 import com.brimud.service.BuilderException;
-import com.brimud.service.BuilderService;
 import com.brimud.service.MessageService;
 import com.google.inject.Inject;
 
@@ -22,14 +21,12 @@ class RoomDeleteCommand implements Command {
   static final String ROOM_DELETE = "rdelete";
   
   private final MessageService messageService;
-  private final BuilderService builderService;
-  private final RoomDao roomDao;
+  private final World world;
   
   @Inject
-  RoomDeleteCommand(MessageService messageService, BuilderService builderService, RoomDao roomDao) {
+  RoomDeleteCommand(MessageService messageService, World world) {
     this.messageService = messageService;
-    this.builderService = builderService;
-    this.roomDao = roomDao;
+    this.world = world;
   }
   
   /* (non-Javadoc)
@@ -50,7 +47,7 @@ class RoomDeleteCommand implements Command {
     }
     
     try {
-    	builderService.deleteRoom(idToDelete);
+    	world.deleteRoom(idToDelete);
     } catch (BuilderException e) {
     	messageService.sendMessage(player, e.getMessage());
     }

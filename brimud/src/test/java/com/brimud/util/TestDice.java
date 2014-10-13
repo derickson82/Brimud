@@ -1,7 +1,7 @@
 package com.brimud.util;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class TestDice {
 
@@ -42,14 +42,14 @@ public class TestDice {
     for (int i = 0; i < 10000; i++) {
       int result = dice.roll();
 
-      Assert.assertTrue(result > 2 && result <= 18, result + "");
+      Assert.assertTrue(result + "", result > 2 && result <= 18);
       results[result - 3]++;
     }
 
     for (int i = 0; i < results.length; i++) {
       // TODO these assertions might randomly fail, which is bad for a test.
       // But how else can we assert that we are getting the expected results?
-      Assert.assertTrue(results[i] > 0, "Result: " + (i + 3) + ", " + results[i]);
+      Assert.assertTrue("Result: " + (i + 3) + ", " + results[i], results[i] > 0);
     }
   }
   
@@ -65,22 +65,22 @@ public class TestDice {
     for (int i = 0; i < 10000; i++) {
       int result = dice.rollKeepHigh(3);
 
-      Assert.assertTrue(result > 2 && result <= 18, result + "");
+      Assert.assertTrue(result + "", result > 2 && result <= 18);
       results[result - 3]++;
     }
 
     for (int i = 0; i < results.length; i++) {
-      Assert.assertTrue(results[i] > 0, "Result: " + (i + 3) + ", " + results[i]);
+      Assert.assertTrue("Result: " + (i + 3) + ", " + results[i], results[i] > 0);
     }
   }
   
-  @Test(expectedExceptions = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testMoreKeepers() {
     Dice dice = Dice.create(4, 6);
     dice.rollKeepHigh(5);
   }
 
-  @Test(expectedExceptions = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void testNegativeSides() {
     Dice.create(-1);
   }

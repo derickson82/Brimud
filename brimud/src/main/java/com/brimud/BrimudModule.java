@@ -17,11 +17,6 @@ public class BrimudModule extends AbstractModule {
 
   private static final Logger logger = LoggerFactory.getLogger(BrimudModule.class);
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.google.inject.AbstractModule#configure()
-   */
   @Override
   protected void configure() {
 

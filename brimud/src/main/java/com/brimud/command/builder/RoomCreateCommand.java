@@ -8,6 +8,7 @@ import com.brimud.db.RoomDao;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
+import com.brimud.model.World;
 import com.brimud.service.MessageService;
 import com.google.inject.Inject;
 
@@ -20,12 +21,12 @@ class RoomCreateCommand implements Command {
   static final String ROOM_CREATE = "rcreate";
   
   private final MessageService messageService;
-  private final RoomDao roomDao;
+  private final World world;
   
   @Inject
-  RoomCreateCommand(MessageService messageService, RoomDao roomDao) {
+  RoomCreateCommand(MessageService messageService, World world) {
     this.messageService = messageService;
-    this.roomDao = roomDao;
+    this.world = world;
   }
   
   /* (non-Javadoc)
@@ -46,14 +47,13 @@ class RoomCreateCommand implements Command {
     Room currentRoom = player.getRoom();
     RoomId roomId = new RoomId(currentRoom.getId().getZone(), arguments);
     
-    Room newRoom = roomDao.getById(roomId);
+    Room newRoom = world.getRoomById(roomId);
     if (newRoom != null) {
       messageService.sendMessage(player, "Room " + roomId + " already exists!");
       return;
     }
     newRoom = new Room();
     newRoom.setId(roomId);
-    roomDao.saveOrUpdate(newRoom);
     player.setRoom(newRoom);
   }
 }

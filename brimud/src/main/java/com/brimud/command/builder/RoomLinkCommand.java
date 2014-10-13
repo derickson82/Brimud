@@ -9,6 +9,7 @@ import com.brimud.db.RoomDao;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
+import com.brimud.model.World;
 import com.brimud.service.MessageService;
 import com.google.inject.Inject;
 
@@ -21,12 +22,12 @@ class RoomLinkCommand implements Command {
   static final String ROOM_LINK = "rlink";
   
   private final MessageService messageService;
-  private final RoomDao roomDao;
+  private final World world;
   
   @Inject
-  RoomLinkCommand(MessageService messageService, RoomDao roomDao) {
+  RoomLinkCommand(MessageService messageService, World world) {
     this.messageService = messageService;
-    this.roomDao = roomDao;
+    this.world = world;
   }
   
   /* (non-Javadoc)
@@ -63,7 +64,7 @@ class RoomLinkCommand implements Command {
       roomId = new RoomId(currentRoom.getId().getZone(), splitArgs[1]);
     }
     
-    Room room = roomDao.getById(roomId);
+    Room room = world.getRoomById(roomId);
     if (room == null) {
       messageService.sendMessage(player, "Can only link to rooms that already exist. " + roomId + " does not exist.");
       return;

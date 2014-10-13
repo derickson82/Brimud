@@ -3,16 +3,12 @@
  */
 package com.brimud.command.builder;
 
-import org.easymock.Capture;
-import org.easymock.EasyMock;
 import org.easymock.EasyMockSupport;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
-import com.brimud.command.builder.GotoCommand;
 import com.brimud.db.PlayerDao;
 import com.brimud.db.RoomDao;
-import com.brimud.model.Player;
+import com.brimud.model.World;
 import com.brimud.service.MessageService;
 
 /**
@@ -22,14 +18,14 @@ import com.brimud.service.MessageService;
 public class TestGotoCommand extends EasyMockSupport {
 
   private final MessageService messageService = createNiceMock(MessageService.class);
-  
-  private final RoomDao roomDao = createNiceMock(RoomDao.class);
+
+  private final World world = new World();
   
   private final PlayerDao playerDao = createNiceMock(PlayerDao.class);
   
-  private final GotoCommand gotoCommand = new GotoCommand(messageService, roomDao, playerDao);
+  private final GotoCommand gotoCommand = new GotoCommand(messageService, world, playerDao);
 
-  @Test(expectedExceptions=NullPointerException.class)
+  @Test(expected=NullPointerException.class)
   public void testNullPlayer() {
     gotoCommand.doCommand(null, null, null);
   }

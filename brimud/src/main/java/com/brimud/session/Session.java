@@ -6,7 +6,6 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.brimud.account.Account;
-import com.brimud.db.Transacted;
 import com.brimud.filter.CommandFilterChain;
 import com.brimud.filter.FilterChain;
 import com.brimud.filter.MessageFilterChain;

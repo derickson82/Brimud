@@ -17,10 +17,6 @@ public class Zone {
   
   private Set<Room> rooms = new HashSet<Room>();
 
-  Zone() {
-    // for hibernate
-  }
-  
   public Zone(String id) {
     this.id = id;
   }

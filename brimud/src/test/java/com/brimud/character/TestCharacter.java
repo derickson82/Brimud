@@ -3,8 +3,9 @@
  */
 package com.brimud.character;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.Test;
+
 
 /**
  * @author Dan
