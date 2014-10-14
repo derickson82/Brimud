@@ -1,4 +1,0 @@
-SYSTEM "http://www.w3.org/2001/xml.xsd" "xml.xsd"
-SYSTEM "http://www.w3.org/2001/XInclude.xsd" "XInclude.xsd"
-PUBLIC "http://brimud.com/zone" "zone.xsd"
-PUBLIC "http://brimud.com/world" "world.xsd"

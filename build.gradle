@@ -5,15 +5,16 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'distribution'
+apply plugin: 'application'
 apply plugin: 'eclipse'
 
 defaultTasks 'build'
 version = 1.0
 sourceCompatibility = 1.7
+mainClassName = 'com.brimud.Brimud'
 
 repositories { 
-	mavenCentral() 
+	jcenter()
 }
 
 dependencies {
@@ -26,36 +27,6 @@ dependencies {
 	testCompile group: "org.easymock", name: "easymock", version: "3.1"
 }
 
-jar {
-	manifest { 
-		attributes("Manifest-Version"       : "1.0",
-			"Main-Class"             : "com.brimud.Brimud",
-			"Class-Path"             : "config/ " + configurations.runtime.collect { "lib/" + it.getName() }.join(" ")
-		)
-	}
-}
-
-distributions {
-	main {
-		baseName = "brimud"
-		contents {
-			into ("") {
-				from ("build/libs") {
-					include "*.jar"
-					fileMode = 0755
-				}			
-			}
-			into ("config") {
-				from "src/main/config"
-			}
-			into ("scripts") {
-				from ("src/main/scripts") {
-					fileMode = 0755
-				}
-			}
-			into ("lib") {
-				from configurations.runtime
-			}
-		}
-	}
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.1'
 }
