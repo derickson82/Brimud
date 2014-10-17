@@ -5,13 +5,14 @@ package com.brimud.command;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import com.brimud.command.builder.BuilderCommands;
 import com.brimud.filter.ChainTarget;
 import com.brimud.model.Player;
 import com.brimud.service.MessageService;
 import com.brimud.session.Session;
 import com.brimud.util.StringUtil;
-import com.google.inject.Inject;
 
 /**
  * @author dan

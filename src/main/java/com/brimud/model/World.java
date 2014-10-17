@@ -12,7 +12,7 @@ public class World {
 	}
 
 	public Room getRoomById(RoomId roomId) {
-		throw new RuntimeException("Loading room by id not implemented");
+		return null;
 	}
 
 	public void deleteRoom(RoomId toDelete) throws BuilderException {

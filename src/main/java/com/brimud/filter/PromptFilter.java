@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import com.brimud.command.Direction;
 import com.brimud.db.PlayerDao;
 import com.brimud.model.Player;
 import com.brimud.session.Session;
-import com.google.inject.Inject;
 
 /**
  * This filter is intended to go at the end of the filter chain, so the prompt will be output last

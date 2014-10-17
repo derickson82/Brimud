@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import com.brimud.account.Account;
 import com.brimud.filter.CommandFilterChain;
 import com.brimud.filter.FilterChain;
 import com.brimud.filter.MessageFilterChain;
 import com.brimud.statemachine.StateMachine;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
 
 public class Session {
 

@@ -3,10 +3,11 @@
  */
 package com.brimud.command;
 
+import javax.inject.Inject;
+
 import com.brimud.model.Player;
 import com.brimud.session.Session;
 import com.brimud.session.SessionManager;
-import com.google.inject.Inject;
 
 /**
  * @author dan

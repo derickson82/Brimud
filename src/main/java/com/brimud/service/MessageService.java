@@ -3,9 +3,10 @@
  */
 package com.brimud.service;
 
+import javax.inject.Inject;
+
 import com.brimud.model.Player;
 import com.brimud.session.SessionManager;
-import com.google.inject.Inject;
 
 /**
  * @author dan

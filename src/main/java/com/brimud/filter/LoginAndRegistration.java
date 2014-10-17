@@ -1,5 +1,7 @@
 package com.brimud.filter;
 
+import javax.inject.Inject;
+
 import com.brimud.account.Account;
 import com.brimud.db.AccountDao;
 import com.brimud.db.ZoneDao;
@@ -10,7 +12,6 @@ import com.brimud.session.SessionManager;
 import com.brimud.statemachine.EndState;
 import com.brimud.statemachine.InitialState;
 import com.brimud.statemachine.State;
-import com.google.inject.Inject;
 
 @InitialState("init")
 @EndState("done")
@@ -96,7 +97,7 @@ public class LoginAndRegistration {
     
     Room room = zone.getRoom(roomId);
     
-    account.getPlayer().setRoom(room);
+//    account.getPlayer().setRoom(room);
   }
 
   @State("password")

@@ -3,13 +3,14 @@
  */
 package com.brimud.command.builder;
 
+import javax.inject.Inject;
+
 import com.brimud.command.Command;
 import com.brimud.command.Direction;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.service.MessageService;
 import com.brimud.util.StringUtil;
-import com.google.inject.Inject;
 
 /**
  * @author dan

@@ -3,14 +3,14 @@
  */
 package com.brimud.command.builder;
 
+import javax.inject.Inject;
+
 import com.brimud.command.Command;
-import com.brimud.db.PlayerDao;
 import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
 import com.brimud.model.World;
 import com.brimud.service.MessageService;
-import com.google.inject.Inject;
 
 /**
  * @author Dan
@@ -23,13 +23,11 @@ class RoomIdCommand implements Command {
   private final int ID_MAX_LENGTH = Integer.MAX_VALUE;
   private final MessageService messageService;
   private final World world;
-  private final PlayerDao playerDao;
 
   @Inject
-  RoomIdCommand(MessageService messageService, World world, PlayerDao playerDao) {
+  RoomIdCommand(MessageService messageService, World world) {
     this.messageService = messageService;
     this.world = world;
-    this.playerDao = playerDao;
   }
   
   /* (non-Javadoc)

@@ -3,7 +3,6 @@
  */
 package com.brimud.account;
 
-import com.brimud.model.Player;
 
 
 /**
@@ -13,18 +12,10 @@ import com.brimud.model.Player;
 public class Account {
   private String name;
   private Password password;
-  
-  private Player player;
-
   private boolean authenticated = false;
-
-  Account() {
-    // for hibernate
-  }
 
   public Account(String name) {
     this.name = name;
-    this.player = new Player(name);
   }
 
   public Account(String name, String password) {
@@ -67,14 +58,6 @@ public class Account {
     this.password = new Password(password);
   }
   
-  public Player getPlayer() {
-    return player;
-  }
-  
-  public void setPlayer(Player player) {
-    this.player = player;
-  }
-
   @Override
   public String toString() {
     return name;
