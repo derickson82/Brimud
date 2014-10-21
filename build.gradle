@@ -19,12 +19,22 @@ repositories {
 
 dependencies {
 
-	compile group: "com.google.inject", name: "guice", version: "3.0"
-	compile group: "org.slf4j", name: "slf4j-api", version: "1.7.7"
-//	compile group: "io.netty", name: "netty-all", version: "4.0.0.CR7"
+	compile "javax.inject:javax.inject:1"
+	compile "com.google.inject:guice:3.0"
+	compile "org.slf4j:slf4j-api:1.7.7"
+	compile "org.slf4j:slf4j-simple:1.7.7"
+	compile "io.netty:netty-all:4.0.23.Final"
 	
-	testCompile group: "junit", name: "junit", version: "4.11"
-	testCompile group: "org.easymock", name: "easymock", version: "3.2"
+	testCompile "junit:junit:4.11"
+	testCompile "org.easymock:easymock:3.2"
+}
+
+startScripts {
+	classpath += files('config')
+}
+
+applicationDistribution.from('src/main/resources') {
+	into 'lib/config'
 }
 
 task wrapper(type: Wrapper) {

@@ -25,15 +25,13 @@ public class FilterModule extends AbstractModule {
   @Provides
   @CommandFilterChain
   public FilterChain commandFilterChain(CommandAliasFilter commandAliasFilter, PromptFilter promptFilter, StateMachineFilter stateMachineFilter, CommandInterpretter commandInterpretter) {
-    FilterChain filterChain = new FilterChain(commandInterpretter, promptFilter, stateMachineFilter, commandAliasFilter);
-    return filterChain;
+    return new FilterChain(commandInterpretter, promptFilter, stateMachineFilter, commandAliasFilter);
   }
 
   @Provides
   @MessageFilterChain
   public FilterChain commandFilterChain(SessionChainTarget sessionTarget) {
-    FilterChain filterChain = new FilterChain(sessionTarget);
-    return filterChain;
+    return new FilterChain(sessionTarget);
   }
   
   @Provides

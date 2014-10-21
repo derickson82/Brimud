@@ -2,8 +2,6 @@ package com.brimud.session;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,23 +10,22 @@ import com.brimud.account.Account;
 import com.brimud.filter.CommandFilterChain;
 import com.brimud.filter.FilterChain;
 import com.brimud.filter.MessageFilterChain;
+import com.brimud.model.Player;
 import com.brimud.statemachine.StateMachine;
 
 public class Session {
 
   private final List<SessionListener> listeners = new ArrayList<SessionListener>();
 
-  private final Queue<String> messageQueue = new ConcurrentLinkedQueue<String>();
-  
   private final FilterChain commandFilter;
   
   private final FilterChain messageFilter;
   
   private final StateMachine loginStateMachine;
   
-  private boolean quit = false;
-  
   private Account account = null;
+  
+  private Player player = null;
   
   @Inject
   public Session(@CommandFilterChain FilterChain commandFilter, @MessageFilterChain FilterChain messageFilter,
@@ -43,7 +40,9 @@ public class Session {
   }
   
   public void addMessage(String msg) {
-    messageQueue.add(msg);
+	  for (SessionListener l : listeners) {
+		  l.message(this, msg);
+	  }
   }
 
   public boolean checkLoginState(String command) {
@@ -54,13 +53,10 @@ public class Session {
     return false;
   }
   
-  public String popQueuedMessage() {
-    return messageQueue.poll();
-  }
-
   public void quit(String msg) {
-    messageQueue.add(msg);
-    quit = true;
+	  for (SessionListener l : listeners) {
+		  l.quit(this, msg);
+	  }
   }
 
   public boolean isAuthenticated() {
@@ -78,11 +74,22 @@ public class Session {
   }
   
   public boolean hasCharacter() {
-    return account != null && account.getPlayer() != null;
+    return player != null;
   }
 
   public Account getAccount() {
     return account;
+  }
+  
+  public Player getPlayer() {
+	  if (player == null && isAuthenticated()) {
+		  player = new Player(account.getName());
+	  }
+	  return player;
+  }
+  
+  public void setPlayer(Player player) {
+	  this.player = player;
   }
     
   public void setAccount(Account account) {
@@ -111,9 +118,5 @@ public class Session {
     for (SessionListener sl : listeners) {
       sl.closing(this);
     }
-  }
-  
-  public boolean isQuit() {
-    return quit;
   }
 }

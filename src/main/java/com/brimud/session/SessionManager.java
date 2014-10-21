@@ -58,8 +58,8 @@ public class SessionManager {
   }
 
   public void init(Session session) {
-    if (session.getAccount().getPlayer() != null) {
-      sessions.put(session.getAccount().getPlayer().getName(), session);
+    if (session.isAuthenticated()) {
+      sessions.put(session.getAccount().getName(), session);
     } else {
       logger.warn("Attempted to add session with null player name! " + session);
     }

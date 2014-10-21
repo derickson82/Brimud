@@ -9,9 +9,7 @@ public class Zone {
   private String name;
   private String description;
   private String shortDescription;
-  private boolean startingZone;
   private String startingRoom;
-//  private Room startingRoom;
   
   private Set<Player> players = new HashSet<Player>();
   
@@ -59,14 +57,6 @@ public class Zone {
     return shortDescription;
   }
   
-  public void setStartingZone(boolean startingZone) {
-    this.startingZone = startingZone;
-  }
-
-  public boolean isStartingZone() {
-    return startingZone;
-  }
-
   public void setStartingRoom(String startingRoom) {
     this.startingRoom = startingRoom;
   }
@@ -113,6 +103,10 @@ public class Zone {
       }
     }
     return null;
+  }
+  
+  public void removeRoom(RoomId roomId) {
+	  removeRoom(getRoom(roomId.getRoomId()));
   }
   
   public void removeRoom(Room room) {

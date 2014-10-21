@@ -35,7 +35,9 @@ class RoomIdCommand implements Command {
    */
   @Override
   public void doCommand(Player player, String command, String newRoomId) {
-    if (newRoomId.length() > ID_MAX_LENGTH) {
+    if (newRoomId == null) {
+      messageService.sendMessage(player, "Room id required");
+	  } else if (newRoomId.length() > ID_MAX_LENGTH) {
       messageService.sendMessage(player, "Room ids cannot exceed " + ID_MAX_LENGTH + " characters.");
     } else {
       Room currentRoom = player.getRoom();

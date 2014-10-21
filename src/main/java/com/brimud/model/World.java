@@ -1,26 +1,53 @@
 package com.brimud.model;
 
+import java.util.HashSet;
 import java.util.Set;
+
+import javax.inject.Singleton;
 
 import com.brimud.service.BuilderException;
 
+@Singleton
 public class World {
-	Set<Zone> zones;
+	
+	private Zone startingZone;
+	private Set<Zone> zones = new HashSet<Zone>();
 
 	public Zone getZoneById(String zoneId) {
-		throw new RuntimeException("Loading zone by id not implemented");
+		for (Zone z : zones) {
+			if (z.getId().equals(zoneId)) {
+				return z;
+			}
+		}
+		return null;
 	}
 
 	public Room getRoomById(RoomId roomId) {
+		Zone zone = getZoneById(roomId.getZoneId());
+		if (zone != null) {
+			return zone.getRoom(roomId.getRoomId());
+		}
 		return null;
 	}
 
 	public void deleteRoom(RoomId toDelete) throws BuilderException {
+		Zone zone = getZoneById(toDelete.getZoneId());
+		if (zone != null) {
+			zone.removeRoom(toDelete);
+		}
 	}
 
 	public Zone getStartingZone() {
-		// TODO Auto-generated method stub
-		return null;
+		return startingZone;
 	}
+
+	public void setStartingZone(Zone zone1) {
+		zones.add(zone1);
+		startingZone = zone1;
+	}
+
+  public void addZone(Zone zone) {
+    zones.add(zone);
+  }
 	
 }

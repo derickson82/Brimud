@@ -63,6 +63,7 @@ class ZoneCreateCommand implements Command {
     }
 
     zone = new Zone(arguments, "Zone needs a name", "Zone needs a description");
+    world.addZone(zone);
 
     RoomId roomId = new RoomId(arguments, "room1");
     Room room = new Room();

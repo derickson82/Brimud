@@ -35,11 +35,12 @@ class RoomDeleteCommand implements Command {
    */
   @Override
   public void doCommand(Player player, String command, String arguments) {
-    // TODO Auto-generated method stub
     if (!ROOM_DELETE.equalsIgnoreCase(command)) {
       messageService.sendMessage(player, "Something strange happened. rdelete, but not rdelete");
       return;
     }
+    
+    // FIXME deleting a room requires removing all references to the room, from the zone, other room exits, players, etc
     
     Room currentRoom = player.getRoom();
     RoomId idToDelete = RoomId.fromString(arguments);

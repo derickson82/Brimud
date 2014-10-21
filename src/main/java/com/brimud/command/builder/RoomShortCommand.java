@@ -31,7 +31,9 @@ class RoomShortCommand implements Command {
    */
   @Override
   public void doCommand(Player player, String command, String arguments) {
-    if (arguments.length() > SHORT_MAX_LENGTH) {
+    if (arguments == null) {
+      messageService.sendMessage(player, "Expected 'rshort <a short text description>'");
+    } else if (arguments.length() > SHORT_MAX_LENGTH) {
       messageService.sendMessage(player, "Room short descriptions cannot be longer than " + SHORT_MAX_LENGTH + " characters.");
     } else {
       Room room = player.getRoom();

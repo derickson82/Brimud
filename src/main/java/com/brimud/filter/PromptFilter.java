@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import com.brimud.command.Direction;
-import com.brimud.db.PlayerDao;
 import com.brimud.model.Player;
 import com.brimud.session.Session;
 
@@ -20,21 +17,13 @@ import com.brimud.session.Session;
  */
 public class PromptFilter implements Filter {
 
-  private final PlayerDao playerDao;
-  
-  @Inject
-  PromptFilter(PlayerDao playerDao) {
-    this.playerDao = playerDao;
-  }
-  
   @Override
   public void doFilter(Session session, String command, FilterChain filterChain) {
     filterChain.doFilter(session, command);
-    if (session.isAuthenticated() 
-        && !session.isQuit() && session.getAccount().getPlayer() != null) {
+    if (session.isAuthenticated() && session.hasCharacter() && !"quit".equalsIgnoreCase(command)) {
       StringBuilder b = new StringBuilder();
       b.append("\n");
-      Player player = playerDao.getById(session.getAccount().getPlayer().getName());
+      Player player = session.getPlayer();
       b.append(player.getRoom().getId()).append(" ");
       List<Direction> exits = new ArrayList<Direction>(player.getRoom().getExits().keySet());
       Collections.sort(exits);

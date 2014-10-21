@@ -25,7 +25,7 @@ public class AccountDao {
 
 	public Account getById(String accountName) {
 		Session session = manager.get(accountName);
-		return session.getAccount();
+		return session != null ? session.getAccount() : null;
 	}
 	
 }

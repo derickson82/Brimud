@@ -63,7 +63,7 @@ public class CommandInterpretter implements ChainTarget {
 
   @Override
   public void execute(Session session, String command) {
-	  throw new RuntimeException("The command interpretter has been disabled. Figure out how to put it back");
+	  interpret(session.getPlayer(), command);
   }
 
 }

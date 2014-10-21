@@ -4,8 +4,9 @@ import javax.inject.Inject;
 
 import com.brimud.account.Account;
 import com.brimud.db.AccountDao;
-import com.brimud.db.ZoneDao;
+import com.brimud.model.Player;
 import com.brimud.model.Room;
+import com.brimud.model.World;
 import com.brimud.model.Zone;
 import com.brimud.session.Session;
 import com.brimud.session.SessionManager;
@@ -18,13 +19,13 @@ import com.brimud.statemachine.State;
 public class LoginAndRegistration {
   
   private final AccountDao accountDao;
-  private final ZoneDao zoneDao;
+  private final World world;
   private final SessionManager sessionManager;
 
   @Inject
-  public LoginAndRegistration(AccountDao accountDao, ZoneDao zoneDao, SessionManager sessionManager) {
+  public LoginAndRegistration(AccountDao accountDao, World world, SessionManager sessionManager) {
     this.accountDao = accountDao;
-    this.zoneDao = zoneDao;
+    this.world = world;
     this.sessionManager = sessionManager;
   }
 
@@ -79,11 +80,10 @@ public class LoginAndRegistration {
     
     // TODO confirm the new password before continuing
     session.setPassword(password);
-//    accountDao.saveOrUpdate(session.getAccount());
     
     session.authenticate(password);
     
-    setStartingRoom(session.getAccount());
+    setStartingRoom(session.getPlayer());
     
     session.addMessage("You are registered\n");
     
@@ -91,13 +91,13 @@ public class LoginAndRegistration {
     return "done";
   }
   
-  private void setStartingRoom(Account account) {
-    Zone zone = zoneDao.getStartingZone();
+  private void setStartingRoom(Player player) {
+    Zone zone = world.getStartingZone();
     String roomId = zone.getStartingRoom();
     
     Room room = zone.getRoom(roomId);
     
-//    account.getPlayer().setRoom(room);
+    player.setRoom(room);
   }
 
   @State("password")
@@ -108,7 +108,7 @@ public class LoginAndRegistration {
       return "password";
     } else {
       // TODO hack in the player name as the character for now. move on to character creation later
-      setStartingRoom(session.getAccount());
+      setStartingRoom(session.getPlayer());
 
       session.addMessage("Logged in\n");
       

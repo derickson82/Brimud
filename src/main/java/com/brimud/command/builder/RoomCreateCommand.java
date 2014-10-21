@@ -10,6 +10,7 @@ import com.brimud.model.Player;
 import com.brimud.model.Room;
 import com.brimud.model.RoomId;
 import com.brimud.model.World;
+import com.brimud.model.Zone;
 import com.brimud.service.MessageService;
 
 /**
@@ -33,19 +34,20 @@ class RoomCreateCommand implements Command {
    * @see com.brimud.command.Command#doCommand(com.brimud.model.Player, java.lang.String, java.lang.String)
    */
   @Override
-  public void doCommand(Player player, String command, String arguments) {
+  public void doCommand(Player player, String command, String roomName) {
     if (!ROOM_CREATE.equalsIgnoreCase(command)) {
       messageService.sendMessage(player, "Something odd happened. rcreate, but not rcreate");
       return;
     }
     
-    if (arguments == null) {
-      messageService.sendMessage(player, "I need a name!");
+    if (roomName == null) {
+      messageService.sendMessage(player, "I need a name! Give me a name!");
       return;
     }
     
     Room currentRoom = player.getRoom();
-    RoomId roomId = new RoomId(currentRoom.getId().getZone(), arguments);
+    Zone currentZone = currentRoom.getId().getZone();
+    RoomId roomId = new RoomId(currentZone, roomName);
     
     Room newRoom = world.getRoomById(roomId);
     if (newRoom != null) {
@@ -54,6 +56,7 @@ class RoomCreateCommand implements Command {
     }
     newRoom = new Room();
     newRoom.setId(roomId);
+    currentZone.addRoom(newRoom);
     player.setRoom(newRoom);
   }
 }
